@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+
+int main() {
+    std::string name;
+    std::cout << "Enter your name: ";
+    std::cin >> name;
+
+    std::string birthdate;
+    std::cout << "Enter your birthdate (MM/DD/YYYY): ";
+    std::cin >> birthdate;
+
+    std::tm tm = {};
+    strptime(birthdate.c_str(), "%m/%d/%Y", &tm);
+    std::time_t t = std::mktime(&tm);
+
+    std::time_t now = std::time(0);
+    std::tm* now_tm = std::localtime(&now);
+    std::tm* birth_tm = std::localtime(&t);
+
+    int age = now_tm->tm_year - birth_tm->tm_year;
+
+    std::cout << "Name: " << name << std::endl;
+    std::cout << "Age: " << age << std::endl;
+
+    return 0;
+}
